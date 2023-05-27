@@ -1,5 +1,12 @@
 #pip install pyserial
-import usb_connection as usb
+#pip install tk
 
-sensor = usb.USBConnection()
-sensor.Read()
+#import usb_connection as usb
+import window as wd
+import storage as st
+
+app = wd.SetupWindow()
+app.window.mainloop()
+
+# sensor = usb.USBConnection()
+# sensor.Read()
