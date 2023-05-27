@@ -29,3 +29,14 @@ class USBConnection():
             if self.serialInst.in_waiting:
                 packet = self.serialInst.readline()
                 print(packet.decode('utf'),end="")
+
+    def ReadBuffer(self):
+        tmp = []
+        if self.serialInst.in_waiting:
+            for i in range(5):
+                text = self.serialInst.readline().decode('utf')
+                if not(text.startswith("L") or text.startswith("R")):
+                    text = self.serialInst.readline().decode('utf')
+                tmp.append(self.serialInst.readline().decode('utf'))
+            self.serialInst.reset_input_buffer()
+            return tmp
