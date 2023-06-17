@@ -110,39 +110,40 @@ void ReadSensors(){
       }
     }
 
-    //if(!(digitalRead(DT_R1) && digitalRead(DT_R2) && digitalRead(DT_R3) && digitalRead(DT_R4) && digitalRead(DT_R5)))
-    // {
-    //   digitalWrite(SCLK_R, LOW);
-    //   r_foot[0] = 0;
-    //   r_foot[1] = 0;
-    //   r_foot[2] = 0;
-    //   r_foot[3] = 0;
-    //   r_foot[4] = 0;
-    //   bool tmp[5];
-    //   for(int i = 24; i >= 0; i--)
-    //   {
-    //     digitalWrite(SCLK_R, HIGH);
-    //     delayMicroseconds(1);
-    //     tmp[0] = digitalRead(DT_R1);
-    //     tmp[1] = digitalRead(DT_R2);
-    //     tmp[2] = digitalRead(DT_R3);
-    //     tmp[3] = digitalRead(DT_R4);
-    //     tmp[4] = digitalRead(DT_R5);
-    //     digitalWrite(SCLK_R, LOW);
-    //     delayMicroseconds(1);
-    //     r_foot[0] |= ((uint32_t)(tmp[0]) << i);
-    //     r_foot[1] |= ((uint32_t)(tmp[1]) << i);
-    //     r_foot[2] |= ((uint32_t)(tmp[2]) << i);
-    //     r_foot[3] |= ((uint32_t)(tmp[3]) << i);
-    //     r_foot[4] |= ((uint32_t)(tmp[4]) << i);
-    //   }
-    //   for(int i=0; i < 5; i++){
-    //     Serial.print("R");
-    //     Serial.print(i+1);
-    //     Serial.print("-");
-    //     Serial.println(r_foot[i]);
-    //   }
-    // }
+    //if(!(digitalRead(DT_L1) && digitalRead(DT_L2) && digitalRead(DT_L3) && digitalRead(DT_L4) && digitalRead(DT_L5)))
+    if(1) //for testing one sensor
+    {
+      digitalWrite(SCLK_R, LOW);
+      r_foot[0] = 0;
+      r_foot[1] = 0;
+      r_foot[2] = 0;
+      r_foot[3] = 0;
+      r_foot[4] = 0;
+      bool tmp[5];
+      for(int i = 24; i >= 0; i--)
+      {
+        digitalWrite(SCLK_R, HIGH);
+        delayMicroseconds(1);
+        tmp[0] = digitalRead(DT_R1);
+        tmp[1] = digitalRead(DT_R2);
+        tmp[2] = digitalRead(DT_R3);
+        tmp[3] = digitalRead(DT_R4);
+        tmp[4] = digitalRead(DT_R5);
+        digitalWrite(SCLK_R, LOW);
+        delayMicroseconds(1);
+        r_foot[0] |= ((uint32_t)(tmp[0]) << i);
+        r_foot[1] |= ((uint32_t)(tmp[1]) << i);
+        r_foot[2] |= ((uint32_t)(tmp[2]) << i);
+        r_foot[3] |= ((uint32_t)(tmp[3]) << i);
+        r_foot[4] |= ((uint32_t)(tmp[4]) << i);
+      }
+      for(int i=0; i < 5; i++){
+        Serial.print("R");
+        Serial.print(i+1);
+        Serial.print("-");
+        Serial.println(r_foot[i]);
+      }
+    }
 }
     
 

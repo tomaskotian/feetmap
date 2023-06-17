@@ -21,8 +21,10 @@ import time
 # app.window.mainloop()
 
 sensor = usb.USBConnection()
-#sensor.Read()
+sensor.GetData()
+sensor.Read()
+
 # print(me.Convert(sensor.ReadBuffer()))
-while(1):
-    print(me.Convert(sensor.ReadBuffer()))
-    time.sleep(0.1)
+# while(1):   
+#     print(me.Convert(sensor.ReadBuffer()))
+#     time.sleep(0.1)
