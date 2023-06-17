@@ -1,9 +1,8 @@
 //----------------------------------------------------------
 //feetmap_v0_sensors
 
-//program which read data from 10 HX711 a send them via USB
+//program which read data from 10 HX711 a send them via USB after 'S' send from computer via Serial
 //HX711 rate 10SPS, pin 15 GND
-//USB baud rate
 
 //Connection sensor to HX711
 //RED   E+
@@ -11,9 +10,9 @@
 //GREEN A-
 //WHITE A+
 
-//Segment anotiation
-//message l1-<value>
-//start with l1,l2,.....r1,...,r5
+//Segment anotiation when you stand on feetmap
+//message L1-<value>
+//start with L1,L2,.....R1,...,R5
 //left foot     right foot
 //L1  L2        R1  R2
 //  L3            R3
@@ -68,8 +67,16 @@ void setup() {
 }
 
 void loop() {
-  //if(!(digitalRead(DT_L1) && digitalRead(DT_L2) && digitalRead(DT_L3) && digitalRead(DT_L4) && digitalRead(DT_L5)))
-    if(!(digitalRead(DT_L1)))
+  if(Serial.available() > 0){
+    if ('S' == Serial.read()){
+      ReadSensors();
+    }
+  }
+}
+
+void ReadSensors(){
+  //if(!(digitalRead(DT_L1) && digitalRead(DT_L2) && digitalRead(DT_L3) && digitalRead(DT_L4) && digitalRead(DT_L5))) //for all sensors
+    if(!(digitalRead(DT_L1))) //for testing one sensor
     {
       digitalWrite(SCLK_L, LOW);
       l_foot[0] = 0;
@@ -102,6 +109,7 @@ void loop() {
         Serial.println(l_foot[i]);
       }
     }
+
     //if(!(digitalRead(DT_R1) && digitalRead(DT_R2) && digitalRead(DT_R3) && digitalRead(DT_R4) && digitalRead(DT_R5)))
     // {
     //   digitalWrite(SCLK_R, LOW);
@@ -135,6 +143,9 @@ void loop() {
     //     Serial.println(r_foot[i]);
     //   }
     // }
-  
 }
+    
+
+    
+  
   

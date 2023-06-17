@@ -40,3 +40,12 @@ class USBConnection():
                 tmp.append(self.serialInst.readline().decode('utf'))
             self.serialInst.reset_input_buffer()
             return tmp
+
+    def SendChar(self,char):
+        self.serialInst.write(bytearray(char,'ascii'))
+
+    def GetData(self):
+        """
+        function witch send S via usb to get values from all sensors
+        """
+        self.SendChar('S')
