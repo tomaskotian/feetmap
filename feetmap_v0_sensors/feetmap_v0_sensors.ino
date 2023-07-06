@@ -10,6 +10,9 @@
 //GREEN A-
 //WHITE A+
 
+//Sensor
+//white cable down and sensor on static body
+
 //Segment anotiation when you stand on feetmap
 //message L1-<value>
 //start with L1,L2,.....R1,...,R5
@@ -22,6 +25,19 @@
 //baud rate 115200
 
 //read all sensors with common SCLK for one foot
+
+//Conector male front side
+// 1 2 3 4 5
+//  9 8 7 6
+//1 red VCC
+//2 black GND
+//3 blue DT_L1
+//4 purple DT_L2
+//5 shield GND
+//6 yellow DT_L3
+//7 green DT_L4
+//8 brown DT_L5 
+//9 white SCLK_L
 //----------------------------------------------------------
 
 #define R_FOOT 0

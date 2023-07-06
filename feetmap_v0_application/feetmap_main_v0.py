@@ -1,30 +1,28 @@
 #pip install pyserial
 #pip install tk
+#pip install Pillow
 
-import usb_connection as usb
+#Debug mode without connected sensor
+debug = False
+
+if not(debug):
+    import usb_connection as usb
 import window as wd
-import memory as me
-import random
-import time
+from threading import Timer
 
-# memory = me.Memory()
-# for i in range(0,10):
-#     r = []
-#     l = []
-#     for x in range(5):
-#         r.append(random.randint(0,9))
-#         l.append(random.randint(0,9))
-#     memory.Add(r,l)
+def ReadValues():
+    sensor.GetData()
+    data = sensor.ReadBuffer()
+    if data != []:
+        data = sensor.ToPercent(data)
+        app.UpdateValues(data)
+    Timer(0.1,ReadValues).start()
 
 
-# app = wd.SetupWindow()
-# app.window.mainloop()
-
+app = wd.SetupWindow() 
 sensor = usb.USBConnection()
-sensor.GetData()
-sensor.Read()
+ReadValues()
+# app.window.resizable(False,False)
+app.window.mainloop()
 
-# print(me.Convert(sensor.ReadBuffer()))
-# while(1):   
-#     print(me.Convert(sensor.ReadBuffer()))
-#     time.sleep(0.1)
+

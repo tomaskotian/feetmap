@@ -19,25 +19,29 @@ class USBConnection():
 
     serialInst.baudrate = 115200
     serialInst.port = portVar
+    serialInst.timeout = 0.1
     serialInst.open()
     serialInst.reset_input_buffer()
     time.sleep(2) 
+    print(f"Connected to {str(port)}")
 
     def Read(self):
+        """
+        test function for answer 10 sensors
+        """
         for x in range(10): 
             packet = self.serialInst.readline()
             print(packet.decode('utf'),end="")
 
     def ReadBuffer(self):
         tmp = []
-        if self.serialInst.in_waiting:
-            for i in range(5):
-                text = self.serialInst.readline().decode('utf')
-                if not(text.startswith("L") or text.startswith("R")):
-                    text = self.serialInst.readline().decode('utf')
-                tmp.append(self.serialInst.readline().decode('utf'))
-            self.serialInst.reset_input_buffer()
-            return tmp
+        for x in range(10):
+            tmp.append(self.serialInst.readline().decode('utf'))
+        if self.ControlData(tmp):
+            return  self.ToKg(tmp)
+        else:
+            print("ERROR")
+            return []
 
     def SendChar(self,char):
         self.serialInst.write(char)
@@ -47,3 +51,55 @@ class USBConnection():
         function witch send S via usb to get values from all sensors
         """
         self.SendChar(b'S')
+
+    def ToKg(self,data):
+        tmp = []
+        weight = []
+        constants = [32398597, 32291861, 32340819, 32487481, 32437759, 32259989, 33140741, 32338967, 1180777, 880607]
+        for b in data:
+            tmp.append(int(b.split()[0].split('-')[-1]))
+        for i in range(len(tmp)):
+            val = int((constants[i]-tmp[i])/25000)
+            if val < 0:
+                weight.append(0)
+            else:
+                weight.append(val)
+        # print(weight)
+        return weight
+
+    def ControlData(self,data):
+        template = ["L1","L2","L3","L4","L5","R1","R2","R3","R4","R5"]
+
+        if len(template) == len(data):
+            i = 0
+            for t in template:
+                if t in data[i]:
+                    i += 1
+                else:
+                    print(f"template {template}")
+                    print(f"template {data}")
+                    return False
+            return True
+        else:
+            print(f"Missing data from sensor {data}")
+            return False
+        
+    def ToPercent(self,data):
+        l_total = data[0] + data[1] + data[2] + data[3] + data[4] 
+        r_total = data[5] + data[6] + data[7] + data[8] + data[9] 
+        total = l_total + r_total
+        tmp = [0,0,0,0,0,0,0,0,0,0,0,0]
+        
+        if total != 0:
+            tmp[10] = int((l_total/total)*100)
+            tmp[11] = int((r_total/total)*100)
+        
+        if l_total != 0:
+            for i in range(5):
+                tmp[i] = int((data[i]/l_total)*100)
+
+        if r_total != 0:
+            for i in range(5,10):
+                tmp[i] = int((data[i]/r_total)*100)
+
+        return tmp
