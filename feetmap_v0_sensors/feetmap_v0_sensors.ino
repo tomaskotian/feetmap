@@ -1,9 +1,8 @@
 //----------------------------------------------------------
 //feetmap_v0_sensors
 
-//program which read data from 10 HX711 a send them via USB
+//program which read data from 10 HX711 a send them via USB after 'S' send from computer via Serial
 //HX711 rate 10SPS, pin 15 GND
-//USB baud rate
 
 //Connection sensor to HX711
 //RED   E+
@@ -11,9 +10,12 @@
 //GREEN A-
 //WHITE A+
 
-//Segment anotiation
-//message l1-<value>
-//start with l1,l2,.....r1,...,r5
+//Sensor
+//white cable down and sensor on static body
+
+//Segment anotiation when you stand on feetmap
+//message L1-<value>
+//start with L1,L2,.....R1,...,R5
 //left foot     right foot
 //L1  L2        R1  R2
 //  L3            R3
@@ -23,6 +25,19 @@
 //baud rate 115200
 
 //read all sensors with common SCLK for one foot
+
+//Conector male front side
+// 1 2 3 4 5
+//  9 8 7 6
+//1 red VCC
+//2 black GND
+//3 blue DT_L1
+//4 purple DT_L2
+//5 shield GND
+//6 yellow DT_L3
+//7 green DT_L4
+//8 brown DT_L5 
+//9 white SCLK_L
 //----------------------------------------------------------
 
 #define R_FOOT 0
@@ -68,8 +83,16 @@ void setup() {
 }
 
 void loop() {
-  //if(!(digitalRead(DT_L1) && digitalRead(DT_L2) && digitalRead(DT_L3) && digitalRead(DT_L4) && digitalRead(DT_L5)))
-    if(!(digitalRead(DT_L1)))
+  if(Serial.available() > 0){
+    if ('S' == Serial.read()){
+      ReadSensors();
+    }
+  }
+}
+
+void ReadSensors(){
+  //if(!(digitalRead(DT_L1) && digitalRead(DT_L2) && digitalRead(DT_L3) && digitalRead(DT_L4) && digitalRead(DT_L5))) //for all sensors
+    if(!(digitalRead(DT_L1))) //for testing one sensor
     {
       digitalWrite(SCLK_L, LOW);
       l_foot[0] = 0;
@@ -102,39 +125,44 @@ void loop() {
         Serial.println(l_foot[i]);
       }
     }
-    //if(!(digitalRead(DT_R1) && digitalRead(DT_R2) && digitalRead(DT_R3) && digitalRead(DT_R4) && digitalRead(DT_R5)))
-    // {
-    //   digitalWrite(SCLK_R, LOW);
-    //   r_foot[0] = 0;
-    //   r_foot[1] = 0;
-    //   r_foot[2] = 0;
-    //   r_foot[3] = 0;
-    //   r_foot[4] = 0;
-    //   bool tmp[5];
-    //   for(int i = 24; i >= 0; i--)
-    //   {
-    //     digitalWrite(SCLK_R, HIGH);
-    //     delayMicroseconds(1);
-    //     tmp[0] = digitalRead(DT_R1);
-    //     tmp[1] = digitalRead(DT_R2);
-    //     tmp[2] = digitalRead(DT_R3);
-    //     tmp[3] = digitalRead(DT_R4);
-    //     tmp[4] = digitalRead(DT_R5);
-    //     digitalWrite(SCLK_R, LOW);
-    //     delayMicroseconds(1);
-    //     r_foot[0] |= ((uint32_t)(tmp[0]) << i);
-    //     r_foot[1] |= ((uint32_t)(tmp[1]) << i);
-    //     r_foot[2] |= ((uint32_t)(tmp[2]) << i);
-    //     r_foot[3] |= ((uint32_t)(tmp[3]) << i);
-    //     r_foot[4] |= ((uint32_t)(tmp[4]) << i);
-    //   }
-    //   for(int i=0; i < 5; i++){
-    //     Serial.print("R");
-    //     Serial.print(i+1);
-    //     Serial.print("-");
-    //     Serial.println(r_foot[i]);
-    //   }
-    // }
-  
+
+    //if(!(digitalRead(DT_L1) && digitalRead(DT_L2) && digitalRead(DT_L3) && digitalRead(DT_L4) && digitalRead(DT_L5)))
+    if(1) //for testing one sensor
+    {
+      digitalWrite(SCLK_R, LOW);
+      r_foot[0] = 0;
+      r_foot[1] = 0;
+      r_foot[2] = 0;
+      r_foot[3] = 0;
+      r_foot[4] = 0;
+      bool tmp[5];
+      for(int i = 24; i >= 0; i--)
+      {
+        digitalWrite(SCLK_R, HIGH);
+        delayMicroseconds(1);
+        tmp[0] = digitalRead(DT_R1);
+        tmp[1] = digitalRead(DT_R2);
+        tmp[2] = digitalRead(DT_R3);
+        tmp[3] = digitalRead(DT_R4);
+        tmp[4] = digitalRead(DT_R5);
+        digitalWrite(SCLK_R, LOW);
+        delayMicroseconds(1);
+        r_foot[0] |= ((uint32_t)(tmp[0]) << i);
+        r_foot[1] |= ((uint32_t)(tmp[1]) << i);
+        r_foot[2] |= ((uint32_t)(tmp[2]) << i);
+        r_foot[3] |= ((uint32_t)(tmp[3]) << i);
+        r_foot[4] |= ((uint32_t)(tmp[4]) << i);
+      }
+      for(int i=0; i < 5; i++){
+        Serial.print("R");
+        Serial.print(i+1);
+        Serial.print("-");
+        Serial.println(r_foot[i]);
+      }
+    }
 }
+    
+
+    
+  
   

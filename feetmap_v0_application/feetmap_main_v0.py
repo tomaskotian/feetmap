@@ -1,27 +1,28 @@
 #pip install pyserial
+#pip install tk
+#pip install Pillow
 
-import serial.tools.list_ports
+#Debug mode without connected sensor
+debug = False
 
-ports = serial.tools.list_ports.comports()
-serialInst = serial.Serial()
+if not(debug):
+    import usb_connection as usb
+import window as wd
+from threading import Timer
 
-portList = []
-for port in ports:
-    portList.append(str(port))
-    if 29987 == port.pid:
-        print(f"Connecting...{str(port)}")
-        portVar = port.device
-        break
-    else:
-        print("Device is not connected!!!")
+def ReadValues():
+    sensor.GetData()
+    data = sensor.ReadBuffer()
+    if data != []:
+        data = sensor.ToPercent(data)
+        app.UpdateValues(data)
+    Timer(0.1,ReadValues).start()
 
-serialInst.baudrate = 115200
-serialInst.port = portVar
-serialInst.open()
 
-serialInst.reset_input_buffer()
-while True:
-    
-    if serialInst.in_waiting:
-        packet = serialInst.readline()
-        print(packet.decode('utf'),end="")
+app = wd.SetupWindow() 
+sensor = usb.USBConnection()
+ReadValues()
+# app.window.resizable(False,False)
+app.window.mainloop()
+
+
