@@ -3,27 +3,27 @@ from PIL import Image, ImageTk
 
 window = Tk()
 
-#getting screen width and height of display
-width= window.winfo_screenwidth()
-height= window.winfo_screenheight()
-#setting tkinter window size
+width= window.winfo_screenwidth()   #1280
+height= window.winfo_screenheight() #720
+
+# width= 800
+# height= 450
+
 window.geometry("%dx%d" % (width, height))
 window.title("test")
 
-bg = ImageTk.PhotoImage(file="images/feet.png")
-my_canvas = Canvas(window,width=width,height=height)
-my_canvas.pack(fill="both",expand=True)
-my_canvas.create_image(0,0,image=bg,anchor=NW)
+foot_frame_width = int(width*0.8)
+foot_frame_height = int(height*0.9)
+foot_frame  = Frame(window, width=foot_frame_width, height=foot_frame_height)
+foot_frame.pack(anchor=SE)
 
-# def resizer(e):
-#     global bg1, resized_bg, new_bg
-#     bg1 = Image.open("images/feet.png")
-#     resized_bg = bg1.resize((e.width,e.height),Image.ANTIALIAS)
-#     new_bg = ImageTk.PhotoImage(resized_bg)
-#     my_canvas.create_image(0,0,image=new_bg,anchor=NE)
+canvas= Canvas(foot_frame, width= foot_frame_width, height= foot_frame_height)
+canvas.pack()
 
+image = Image.open("images/feet.png")
+resized_image = image.resize((foot_frame_width,foot_frame_height),Image.ANTIALIAS)
+new_image = ImageTk.PhotoImage(resized_image)
+canvas.create_image(0,0,anchor=NW,image=new_image)
 
-
-# window.bind("<Configure>",resizer)
 window.resizable(False,False)
 window.mainloop()

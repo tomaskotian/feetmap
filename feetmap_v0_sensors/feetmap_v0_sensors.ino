@@ -91,8 +91,8 @@ void loop() {
 }
 
 void ReadSensors(){
-  //if(!(digitalRead(DT_L1) && digitalRead(DT_L2) && digitalRead(DT_L3) && digitalRead(DT_L4) && digitalRead(DT_L5))) //for all sensors
-    if(!(digitalRead(DT_L1))) //for testing one sensor
+  if(!(digitalRead(DT_L1) && digitalRead(DT_L2) && digitalRead(DT_L3) && digitalRead(DT_L4) && digitalRead(DT_L5))) //for all sensors
+  //if(!(digitalRead(DT_L1))) //for testing one sensor
     {
       digitalWrite(SCLK_L, LOW);
       l_foot[0] = 0;
@@ -126,8 +126,8 @@ void ReadSensors(){
       }
     }
 
-    //if(!(digitalRead(DT_L1) && digitalRead(DT_L2) && digitalRead(DT_L3) && digitalRead(DT_L4) && digitalRead(DT_L5)))
-    if(1) //for testing one sensor
+    if(!(digitalRead(DT_R1) && digitalRead(DT_R2) && digitalRead(DT_R3) && digitalRead(DT_R4) && digitalRead(DT_R5)))
+    //if(1) //for testing one sensor
     {
       digitalWrite(SCLK_R, LOW);
       r_foot[0] = 0;
