@@ -15,28 +15,40 @@ class SetupWindow():
         self.ingnore_update = False
         self.mode = 0
 
+        self.menu_width = int(self.width*0.2)
+        self.menu_height = int(self.height*0.9)
+        self.menu = Frame(self.window, width=self.menu_width, height=self.menu_height,bg="#abb3b0")
+        self.menu.pack(fill=BOTH,anchor=NW,side=LEFT)
+
         self.window.geometry("%dx%d" % (self.width, self.height))
         self.window.title("Feetmap")
+
+        px = 20
+        py = 20
+        self.but0 = Button(self.menu, text ="mode0", command = self.Mode0,bg="#06b025")
+        self.but0.pack(anchor=W,padx=px,pady=py)
         
-        self.B = Button(self.window, text ="mode0", command = self.Mode0)
-        self.B.pack(anchor=NW)
+        self.but1 = Button(self.menu, text ="mode1", command = self.Mode1,bg="#ffffff")
+        self.but1.pack(anchor=W,padx=px,pady=py)
         
-        self.B = Button(self.window, text ="mode1", command = self.Mode1)
-        self.B.pack(anchor=NW)
+        self.but2 = Button(self.menu, text ="mode2", command = self.Mode2,bg="#ffffff")
+        self.but2.pack(anchor=W,padx=px,pady=py)
         
-        self.B = Button(self.window, text ="mode2", command = self.Mode2)
-        self.B.pack(anchor=NW)
-        
-        self.B = Button(self.window, text ="mode3", command = self.Mode3)
-        self.B.pack(anchor=NW)
+        self.but3 = Button(self.menu, text ="mode3", command = self.Mode3,bg="#ffffff")
+        self.but3.pack(anchor=W,padx=px,pady=py)
 
         self.Set_up0()
+        
 
 
     #setting tkinter window size
 
 
     def Mode0(self):
+        self.but0.config(bg="#06b025")
+        self.but1.config(bg="#ffffff")
+        self.but2.config(bg="#ffffff")
+        self.but3.config(bg="#ffffff")
         self.ingnore_update = True
         self.mode = 0
         self.foot_frame.destroy()
@@ -44,6 +56,10 @@ class SetupWindow():
         self.ingnore_update = False
     
     def Mode1(self):
+        self.but0.config(bg="#ffffff")
+        self.but1.config(bg="#06b025")
+        self.but2.config(bg="#ffffff")
+        self.but3.config(bg="#ffffff")
         self.ingnore_update = True
         self.mode = 1
         self.foot_frame.destroy()
@@ -51,6 +67,10 @@ class SetupWindow():
         self.ingnore_update = False
     
     def Mode2(self):
+        self.but0.config(bg="#ffffff")
+        self.but1.config(bg="#ffffff")
+        self.but2.config(bg="#06b025")
+        self.but3.config(bg="#ffffff")
         self.ingnore_update = True
         self.mode = 2
         self.foot_frame.destroy()
@@ -58,6 +78,10 @@ class SetupWindow():
         self.ingnore_update = False
         
     def Mode3(self):
+        self.but0.config(bg="#ffffff")
+        self.but1.config(bg="#ffffff")
+        self.but2.config(bg="#ffffff")
+        self.but3.config(bg="#06b025")
         self.ingnore_update = True
         self.mode = 3
         self.foot_frame.destroy()
@@ -201,7 +225,7 @@ class SetupWindow():
         self.vl1.set("0")
         self.l1 = Label(self.foot_frame, textvariable=self.vl1)
         self.l1.config(font =("Courier", text_size)) 
-        self.l1.place(x=int(self.foot_frame_width*0.22),y=int(self.foot_frame_height*0.1))
+        self.l1.place(x=int(self.foot_frame_width*0.3),y=int(self.foot_frame_height*0.1))
 
         self.vl3 = StringVar()
         self.vl3.set("0")
@@ -213,13 +237,13 @@ class SetupWindow():
         self.vl4.set("0")
         self.l4 = Label(self.foot_frame, textvariable=self.vl4)
         self.l4.config(font =("Courier", text_size)) 
-        self.l4.place(x=int(self.foot_frame_width*0.27),y=int(self.foot_frame_height*0.62))
+        self.l4.place(x=int(self.foot_frame_width*0.3),y=int(self.foot_frame_height*0.62))
 
         self.vr1 = StringVar()
         self.vr1.set("0")
         self.r1 = Label(self.foot_frame, textvariable=self.vr1)
         self.r1.config(font =("Courier", text_size)) 
-        self.r1.place(x=int(self.foot_frame_width*0.63),y=int(self.foot_frame_height*0.1))
+        self.r1.place(x=int(self.foot_frame_width*0.7),y=int(self.foot_frame_height*0.1))
 
         self.vr3 = StringVar()
         self.vr3.set("0")
@@ -231,7 +255,7 @@ class SetupWindow():
         self.vr4.set("0")
         self.r4 = Label(self.foot_frame, textvariable=self.vr4)
         self.r4.config(font =("Courier", text_size)) 
-        self.r4.place(x=int(self.foot_frame_width*0.62),y=int(self.foot_frame_height*0.62))
+        self.r4.place(x=int(self.foot_frame_width*0.7),y=int(self.foot_frame_height*0.62))
 
     def Set_up2(self):
         self.foot_frame_width = int(self.width*0.8)
@@ -272,25 +296,25 @@ class SetupWindow():
         self.vl1.set("0")
         self.l1 = Label(self.foot_frame, textvariable=self.vl1)
         self.l1.config(font =("Courier", text_size)) 
-        self.l1.place(x=int(self.foot_frame_width*0.22),y=int(self.foot_frame_height*0.1))
+        self.l1.place(x=int(self.foot_frame_width*0.3),y=int(self.foot_frame_height*0.1))
 
         self.vl4 = StringVar()
         self.vl4.set("0")
         self.l4 = Label(self.foot_frame, textvariable=self.vl4)
         self.l4.config(font =("Courier", text_size)) 
-        self.l4.place(x=int(self.foot_frame_width*0.27),y=int(self.foot_frame_height*0.62))
+        self.l4.place(x=int(self.foot_frame_width*0.3),y=int(self.foot_frame_height*0.62))
 
         self.vr1 = StringVar()
         self.vr1.set("0")
         self.r1 = Label(self.foot_frame, textvariable=self.vr1)
         self.r1.config(font =("Courier", text_size)) 
-        self.r1.place(x=int(self.foot_frame_width*0.63),y=int(self.foot_frame_height*0.1))
+        self.r1.place(x=int(self.foot_frame_width*0.7),y=int(self.foot_frame_height*0.1))
 
         self.vr4 = StringVar()
         self.vr4.set("0")
         self.r4 = Label(self.foot_frame, textvariable=self.vr4)
         self.r4.config(font =("Courier", text_size)) 
-        self.r4.place(x=int(self.foot_frame_width*0.62),y=int(self.foot_frame_height*0.62))
+        self.r4.place(x=int(self.foot_frame_width*0.7),y=int(self.foot_frame_height*0.62))
 
     def Set_up3(self):
         self.foot_frame_width = int(self.width*0.8)
@@ -331,25 +355,25 @@ class SetupWindow():
         self.vl1.set("0")
         self.l1 = Label(self.foot_frame, textvariable=self.vl1)
         self.l1.config(font =("Courier", text_size)) 
-        self.l1.place(x=int(self.foot_frame_width*0.22),y=int(self.foot_frame_height*0.1))
+        self.l1.place(x=int(self.foot_frame_width*0.3),y=int(self.foot_frame_height*0.1))
 
         self.vl4 = StringVar()
         self.vl4.set("0")
         self.l4 = Label(self.foot_frame, textvariable=self.vl4)
         self.l4.config(font =("Courier", text_size)) 
-        self.l4.place(x=int(self.foot_frame_width*0.27),y=int(self.foot_frame_height*0.62))
+        self.l4.place(x=int(self.foot_frame_width*0.3),y=int(self.foot_frame_height*0.62))
 
         self.vr1 = StringVar()
         self.vr1.set("0")
         self.r1 = Label(self.foot_frame, textvariable=self.vr1)
         self.r1.config(font =("Courier", text_size)) 
-        self.r1.place(x=int(self.foot_frame_width*0.63),y=int(self.foot_frame_height*0.1))
+        self.r1.place(x=int(self.foot_frame_width*0.7),y=int(self.foot_frame_height*0.1))
 
         self.vr4 = StringVar()
         self.vr4.set("0")
         self.r4 = Label(self.foot_frame, textvariable=self.vr4)
         self.r4.config(font =("Courier", text_size)) 
-        self.r4.place(x=int(self.foot_frame_width*0.62),y=int(self.foot_frame_height*0.62))
+        self.r4.place(x=int(self.foot_frame_width*0.7),y=int(self.foot_frame_height*0.62))
 
 
 
@@ -397,7 +421,7 @@ class SetupWindow():
                 self.v2.set(self.AddPercent(data[11]))
 
                 self.vl1.set(self.AddPercent(data[0]))
-                self.vl3.set(self.AddPercent(data[2]))
+                self.vl4.set(self.AddPercent(data[2]))
                 self.vr1.set(self.AddPercent(data[5]))
                 self.vr4.set(self.AddPercent(data[8]))
             elif self.mode == 3:
@@ -410,10 +434,8 @@ class SetupWindow():
                 self.v2.set(self.AddPercent(data[11]))
 
                 self.vl1.set(self.AddPercent(data[0]))
-                self.vl3.set(self.AddPercent(data[2]))
                 self.vl4.set(self.AddPercent(data[3]))
                 self.vr1.set(self.AddPercent(data[5]))
-                self.vr3.set(self.AddPercent(data[7]))
                 self.vr4.set(self.AddPercent(data[8]))
 
 
