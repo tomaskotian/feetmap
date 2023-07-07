@@ -18,7 +18,6 @@ def ReadValues():
         app.UpdateValues(data)
     Timer(0.1,ReadValues).start()
 
-
 app = wd.SetupWindow() 
 sensor = usb.USBConnection()
 ReadValues()
