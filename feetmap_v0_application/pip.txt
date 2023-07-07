@@ -1,0 +1,8 @@
+python --version
+where python
+setx PATH "%PATH%;C:\Python"
+
+pip install pyserial
+pip install tk
+pip install Pillow
+pause
