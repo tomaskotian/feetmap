@@ -1,3 +1,6 @@
+install git
+https://git-scm.com/download/win
+
 python --version
 where python
 setx PATH "%PATH%;C:\Python"
