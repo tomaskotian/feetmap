@@ -55,16 +55,26 @@ class USBConnection():
     def ToKg(self,data):
         tmp = []
         weight = []
-        constants = [32398597, 32291861, 32340819, 32487481, 32437759, 32259989, 33140741, 32338967, 1180777, 880607]
+        constants = [32398597, 32291861, 32600000 , 32487481, 32437759, 32259989, 33140000, 32338967, 1190777, 904007]
         for b in data:
             tmp.append(int(b.split()[0].split('-')[-1]))
         for i in range(len(tmp)):
-            val = int((constants[i]-tmp[i])/25000)
+            if i == 9:
+                if tmp[i] >= constants[i]:
+                    val = int((33554432-tmp[i])/25000) + 35
+                else:
+                    val = int((constants[i]-tmp[i])/25000)
+            elif i == 8:
+                if tmp[i] >= constants[i]:
+                    val = int((33554432-tmp[i])/25000) + 47
+                else:
+                    val = int((constants[i]-tmp[i])/25000)
+            else:
+                val = int((constants[i]-tmp[i])/25000)
             if val < 0:
                 weight.append(0)
             else:
                 weight.append(val)
-        # print(weight)
         return weight
 
     def ControlData(self,data):
@@ -87,6 +97,13 @@ class USBConnection():
     def ToPercent(self,data):
         l_total = data[0] + data[1] + data[2] + data[3] + data[4] 
         r_total = data[5] + data[6] + data[7] + data[8] + data[9] 
+        min_weight = 10
+        if r_total <= min_weight:
+            data = data[:5] + [0,0,0,0,0] 
+            r_total = 0
+        if l_total <= min_weight:
+            data = [0,0,0,0,0] + data[5:]
+            l_total = 0
         total = l_total + r_total
         tmp = [0,0,0,0,0,0,0,0,0,0,0,0]
         

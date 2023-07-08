@@ -21,7 +21,6 @@ def ReadValues():
 app = wd.SetupWindow() 
 sensor = usb.USBConnection()
 ReadValues()
-# app.window.resizable(False,False)
 app.window.mainloop()
 
 

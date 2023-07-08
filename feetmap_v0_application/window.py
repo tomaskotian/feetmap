@@ -441,6 +441,7 @@ class SetupWindow():
 
     def AddPercent(self,val):
         return str(val) + "%"
+        
     
     def DataMode1(self,data):
         data[0] = data[0]+data[1]
