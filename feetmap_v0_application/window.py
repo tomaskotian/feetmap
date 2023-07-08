@@ -101,7 +101,7 @@ class SetupWindow():
         self.canvas.pack()
 
         self.image = Image.open("images/mode0.png")
-        self.resized_image = self.image.resize((int(self.foot_frame_width*0.8),int(self.foot_frame_height*0.8)),Image.ANTIALIAS)
+        self.resized_image = self.image.resize((int(self.foot_frame_width*0.8),int(self.foot_frame_height*0.8)))
         self.new_image = ImageTk.PhotoImage(self.resized_image)
         self.canvas.create_image(int(self.foot_frame_width*0.15),0,anchor=NW,image=self.new_image)
 
@@ -196,7 +196,7 @@ class SetupWindow():
         self.canvas.pack()
 
         self.image = Image.open("images/mode1.png")
-        self.resized_image = self.image.resize((int(self.foot_frame_width*0.8),int(self.foot_frame_height*0.8)),Image.ANTIALIAS)
+        self.resized_image = self.image.resize((int(self.foot_frame_width*0.8),int(self.foot_frame_height*0.8)))
         self.new_image = ImageTk.PhotoImage(self.resized_image)
         self.canvas.create_image(int(self.foot_frame_width*0.15),0,anchor=NW,image=self.new_image)
 
@@ -267,7 +267,7 @@ class SetupWindow():
         self.canvas.pack()
 
         self.image = Image.open("images/mode2.png")
-        self.resized_image = self.image.resize((int(self.foot_frame_width*0.8),int(self.foot_frame_height*0.8)),Image.ANTIALIAS)
+        self.resized_image = self.image.resize((int(self.foot_frame_width*0.8),int(self.foot_frame_height*0.8)))
         self.new_image = ImageTk.PhotoImage(self.resized_image)
         self.canvas.create_image(int(self.foot_frame_width*0.15),0,anchor=NW,image=self.new_image)
 
@@ -326,7 +326,7 @@ class SetupWindow():
         self.canvas.pack()
 
         self.image = Image.open("images/mode3.png")
-        self.resized_image = self.image.resize((int(self.foot_frame_width*0.8),int(self.foot_frame_height*0.8)),Image.ANTIALIAS)
+        self.resized_image = self.image.resize((int(self.foot_frame_width*0.8),int(self.foot_frame_height*0.8)))
         self.new_image = ImageTk.PhotoImage(self.resized_image)
         self.canvas.create_image(int(self.foot_frame_width*0.15),0,anchor=NW,image=self.new_image)
 
