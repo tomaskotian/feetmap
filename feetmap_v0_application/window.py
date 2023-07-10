@@ -9,6 +9,8 @@ class SetupWindow():
         self.width= self.window.winfo_screenwidth()   #1280
         self.height= self.window.winfo_screenheight() #720
 
+        self.calibrate = True
+
         # width= 800
         # height= 450
 
@@ -36,6 +38,9 @@ class SetupWindow():
         
         self.but3 = Button(self.menu, text ="mode3", command = self.Mode3,bg="#ffffff")
         self.but3.pack(anchor=W,padx=px,pady=py)
+
+        self.but4 = Button(self.menu, text ="calibration", command = self.Calibration,bg="#ffffff")
+        self.but4.pack(anchor=W,padx=px,pady=py)
 
         self.Set_up0()
         
@@ -87,6 +92,10 @@ class SetupWindow():
         self.foot_frame.destroy()
         self.Set_up3()
         self.ingnore_update = False
+
+    def Calibration(self):
+        self.calibrate = True
+
 
     def View(self):
         print("profile view")

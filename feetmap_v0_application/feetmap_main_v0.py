@@ -3,14 +3,16 @@
 #pip install Pillow
 
 #Debug mode without connected sensor
-debug = False
+debug = True
 
-if not(debug):
-    import usb_connection as usb
+import usb_connection as usb
 import window as wd
 from threading import Timer
 
 def ReadValues():
+    if app.calibrate:
+        sensor.Calibrate()
+        app.calibrate = False
     sensor.GetData()
     data = sensor.ReadBuffer()
     if data != []:
@@ -19,7 +21,8 @@ def ReadValues():
     Timer(0.1,ReadValues).start()
 
 app = wd.SetupWindow() 
-sensor = usb.USBConnection()
+sensor = usb.USBConnection(debug)
+sensor.Calibrate()
 ReadValues()
 app.window.mainloop()
 

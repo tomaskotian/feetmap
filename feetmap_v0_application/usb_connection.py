@@ -2,28 +2,34 @@ import serial.tools.list_ports
 import sys, time
 
 class USBConnection():
-    ports = serial.tools.list_ports.comports()
-    serialInst = serial.Serial()
+    def __init__(self,debug):
+        self.debug = debug
+        self.constants = [32398597, 32291861, 32600000 , 32487481, 32437759, 32259989, 33140000, 32338967, 1190777, 904007]
+        if not(self.debug):
+            self.Startup()
 
-    portList = []
-    portVar = ""
-    for port in ports:
-        portList.append(str(port))
-        if 29987 == port.pid:
-            print(f"Connecting...{str(port)}")
-            portVar = port.device
-            break
-    if portVar == "" or len(portList) == 0:
-        print("Device is not connected!!!")
-        sys.exit()
+    def Startup(self):
+        ports = serial.tools.list_ports.comports()
+        serialInst = serial.Serial()
+        portList = []
+        portVar = ""
+        for port in ports:
+            portList.append(str(port))
+            if 29987 == port.pid:
+                print(f"Connecting...{str(port)}")
+                portVar = port.device
+                break
+        if portVar == "" or len(portList) == 0:
+            print("Device is not connected!!!")
+            sys.exit()
 
-    serialInst.baudrate = 115200
-    serialInst.port = portVar
-    serialInst.timeout = 0.1
-    serialInst.open()
-    serialInst.reset_input_buffer()
-    time.sleep(2) 
-    print(f"Connected to {str(port)}")
+        serialInst.baudrate = 115200
+        serialInst.port = portVar
+        serialInst.timeout = 0.1
+        serialInst.open()
+        serialInst.reset_input_buffer()
+        time.sleep(2) 
+        print(f"Connected to {str(port)}")
 
     def Read(self):
         """
@@ -34,14 +40,37 @@ class USBConnection():
             print(packet.decode('utf'),end="")
 
     def ReadBuffer(self):
-        tmp = []
-        for x in range(10):
-            tmp.append(self.serialInst.readline().decode('utf'))
-        if self.ControlData(tmp):
-            return  self.ToKg(tmp)
+        if not(self.debug):
+            tmp = []
+            for x in range(10):
+                tmp.append(self.serialInst.readline().decode('utf'))
+            if self.ControlData(tmp):
+                return  self.ToKg(tmp)
+            else:
+                print("ERROR")
+                return []
         else:
-            print("ERROR")
-            return []
+            return [3239859, 3229181, 3260000 , 3248481, 3237759, 3225989, 3314000, 3238967, 190777, 90407]
+        
+    def Buffer(self):
+        tmp = []
+        if not(self.debug):
+            for x in range(10):
+                tmp.append(self.serialInst.readline().decode('utf'))
+            if self.ControlData(tmp):
+                return  self.Parse(tmp)
+            else:
+                print("ERROR")
+                return []
+        else:
+            return [32398597, 32291861, 32600000 , 32487481, 32437759, 32259989, 33140000, 32338967, 1190777, 904007]
+
+    def Parse(self,data):
+        tmp = []
+        for b in data:
+            tmp.append(int(b.split()[0].split('-')[-1]))
+        return tmp
+
 
     def SendChar(self,char):
         self.serialInst.write(char)
@@ -50,12 +79,16 @@ class USBConnection():
         """
         function witch send S via usb to get values from all sensors
         """
-        self.SendChar(b'S')
+        if not(self.debug):
+            self.SendChar(b'S')
+
+    def Calibrate(self):
+        self.constants = self.Buffer()
 
     def ToKg(self,data):
         tmp = []
         weight = []
-        constants = [32398597, 32291861, 32600000 , 32487481, 32437759, 32259989, 33140000, 32338967, 1190777, 904007]
+        constants  = self.constants
         for b in data:
             tmp.append(int(b.split()[0].split('-')[-1]))
         for i in range(len(tmp)):
