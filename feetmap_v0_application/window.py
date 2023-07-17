@@ -42,6 +42,9 @@ class SetupWindow():
         self.but4 = Button(self.menu, text ="calibration", command = self.Calibration,bg="#ffffff")
         self.but4.pack(anchor=W,padx=px,pady=py)
 
+        self.slider = Scale(self.menu,from_=0,to=3,orient='horizontal',resolution=0.5,label="Interval (sec.)")
+        self.slider.pack()
+       
         self.Set_up0()
         
 
@@ -96,7 +99,12 @@ class SetupWindow():
     def Calibration(self):
         self.calibrate = True
 
+    def slider_changed(self):
+        self.value_label.configure(text=self.get_current_value())
 
+    def get_current_value(self):
+        return '{: .2f}'.format(self.current_value.get())
+        
     def View(self):
         print("profile view")
 

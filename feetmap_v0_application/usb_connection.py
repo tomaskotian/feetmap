@@ -5,6 +5,8 @@ class USBConnection():
     def __init__(self,debug):
         self.debug = debug
         self.constants = [32398597, 32291861, 32600000 , 32487481, 32437759, 32259989, 33140000, 32338967, 1190777, 904007]
+        self.values = [0,0,0,0,0,0,0,0,0,0]
+        
         if not(self.debug):
             self.Startup()
 
@@ -126,7 +128,21 @@ class USBConnection():
         else:
             print(f"Missing data from sensor {data}")
             return False
-        
+
+    def BufferData(self,data):
+        for i in range(len(data)):
+            self.values[i] += data[i]
+
+    def ToAvg(self,data,cnt):
+        values = []
+        if cnt == 0:
+            return data
+        else:
+            for i in range(len(data)):
+                values.append(int(self.values[i]/cnt))
+            return values
+
+
     def ToPercent(self,data):
         l_total = data[0] + data[1] + data[2] + data[3] + data[4] 
         r_total = data[5] + data[6] + data[7] + data[8] + data[9] 
