@@ -3,7 +3,7 @@
 #pip install Pillow
 
 #Debug mode without connected sensor
-debug = False
+debug = True
 
 import usb_connection as usb
 import window as wd
@@ -20,10 +20,11 @@ def ReadValues():
     sensor.GetData()
     data = sensor.ReadBuffer()
     if data != []:
-        if time_cnt >= app.slider.get():
+        if time_cnt > app.slider.get():
             cnt = int(app.slider.get()/measure_interval)
             data = sensor.ToAvg(data,cnt)
             data = sensor.ToPercent(data)
+            sensor.values = [0,0,0,0,0,0,0,0,0,0]
             app.UpdateValues(data)
             time_cnt = 0
         else:
