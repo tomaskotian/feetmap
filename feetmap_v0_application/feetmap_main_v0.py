@@ -33,7 +33,7 @@ def ReadValues():
     time_cnt += measure_interval
 
 app = wd.SetupWindow() 
-#sensor = usb.USBConnection(debug)
+sensor = usb.USBConnection(debug)
 sensor.Calibrate()
 ReadValues()
 app.window.mainloop()
