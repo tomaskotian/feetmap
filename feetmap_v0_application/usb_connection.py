@@ -12,7 +12,7 @@ class USBConnection():
 
     def Startup(self):
         ports = serial.tools.list_ports.comports()
-        serialInst = serial.Serial()
+        self.serialInst = serial.Serial()
         portList = []
         portVar = ""
         for port in ports:
@@ -25,11 +25,11 @@ class USBConnection():
             print("Device is not connected!!!")
             sys.exit()
 
-        serialInst.baudrate = 115200
-        serialInst.port = portVar
-        serialInst.timeout = 0.1
-        serialInst.open()
-        serialInst.reset_input_buffer()
+        self.serialInst.baudrate = 115200
+        self.serialInst.port = portVar
+        self.serialInst.timeout = 0.1
+        self.serialInst.open()
+        self.serialInst.reset_input_buffer()
         time.sleep(2) 
         print(f"Connected to {str(port)}")
 
