@@ -6,6 +6,7 @@
 debug = False
 
 import usb_connection as usb
+import time
 import window as wd
 from threading import Timer
 
@@ -34,6 +35,7 @@ def ReadValues():
 
 app = wd.SetupWindow() 
 sensor = usb.USBConnection(debug)
+time.sleep(2)
 sensor.Calibrate()
 ReadValues()
 app.window.mainloop()
