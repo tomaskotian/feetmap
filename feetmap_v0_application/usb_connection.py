@@ -46,6 +46,7 @@ class USBConnection():
             tmp = []
             for x in range(10):
                 tmp.append(self.serialInst.readline().decode('utf'))
+                print(tmp)
             if self.ControlData(tmp):
                 return  self.ToKg(tmp)
             else:
