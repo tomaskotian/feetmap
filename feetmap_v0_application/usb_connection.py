@@ -91,6 +91,8 @@ class USBConnection():
         tmp = []
         weight = []
         constants  = self.constants
+        if data[0] == '':
+            return [0,0,0,0,0,0,0,0,0,0]
         for b in data:
             tmp.append(int(b.split()[0].split('-')[-1]))
         for i in range(len(tmp)):
