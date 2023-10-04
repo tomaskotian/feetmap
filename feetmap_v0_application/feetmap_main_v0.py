@@ -15,10 +15,10 @@ time_cnt = 0
 
 def ReadValues():
     global time_cnt 
-    if app.calibrate:
-        sensor.Calibrate()
-        app.calibrate = False
-    sensor.GetData()
+    #if app.calibrate:
+        #sensor.Calibrate()
+        #app.calibrate = False
+    #sensor.GetData()
     data = sensor.ReadBuffer()
     if data != []:
         if time_cnt > app.slider.get():
@@ -35,7 +35,7 @@ def ReadValues():
 
 app = wd.SetupWindow() 
 sensor = usb.USBConnection(debug)
-#time.sleep(2)
+#   time.sleep(2)
 #sensor.Calibrate()
 ReadValues()
 app.window.mainloop()
