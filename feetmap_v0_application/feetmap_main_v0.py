@@ -38,7 +38,7 @@ app = wd.SetupWindow()
 sensor = usb.USBConnection(debug)
 #   time.sleep(2)
 #sensor.Calibrate()
-#ReadValues()
+ReadValues()
 
 app.window.mainloop()
 
