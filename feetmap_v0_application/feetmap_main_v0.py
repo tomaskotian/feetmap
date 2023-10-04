@@ -3,7 +3,7 @@
 #pip install Pillow
 
 #Debug mode without connected sensor
-debug = False
+debug = True
 
 import usb_connection as usb
 import window as wd
