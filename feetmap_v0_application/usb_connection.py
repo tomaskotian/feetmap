@@ -46,7 +46,7 @@ class USBConnection():
             tmp = []
             for x in range(10):
                 tmp.append(self.serialInst.readline().decode('utf'))
-                print(tmp)
+            print(tmp)
             if self.ControlData(tmp):
                 return  self.ToKg(tmp)
             else:
@@ -86,6 +86,7 @@ class USBConnection():
             self.SendChar(b'S')
 
     def Calibrate(self):
+        self.GetData()
         self.constants = self.Buffer()
 
     def ToKg(self,data):
@@ -149,6 +150,11 @@ class USBConnection():
     def ToPercent(self,data):
         l_total = data[0] + data[1] + data[2] + data[3] + data[4] 
         r_total = data[5] + data[6] + data[7] + data[8] + data[9] 
+
+        if (data[8] + data[9]) ==  r_total:
+            data = data[:5] + [0,0,0,0,0]
+            r_total = 0
+
         min_weight = 10
         if r_total <= min_weight:
             data = data[:5] + [0,0,0,0,0] 

@@ -42,7 +42,7 @@ class SetupWindow():
         self.but4 = Button(self.menu, text ="calibration", command = self.Calibration,bg="#ffffff")
         self.but4.pack(anchor=W,padx=px,pady=py)
 
-        self.slider = Scale(self.menu,from_=0,to=10,orient='horizontal',resolution=1,label="Interval (sec.)")
+        self.slider = Scale(self.menu,from_=0,to=10,orient='horizontal',resolution=0.5,label="Interval (sec.)")
         self.slider.pack()
        
         self.Set_up0()
